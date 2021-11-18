@@ -13,11 +13,11 @@ double getVolume(double widthP, double lengthP, double heightP);
 */
 double getArea(double widthP, double lengthP, double heightP);
 /**
-*\ brief  dвводим параметы парралепипеда
-*\ param выводим объем и площадб поверхности
-*\ return data 
+*\ brief  вводит число двойной точности по приглашению
+*\ param строка приглашения
+*\ return введенное число
 */
-double vvod(std::string ss);
+double vvod(std::string & ss);
 int main()
 {
     const double widthP = vvod("Enter the width ");
@@ -25,7 +25,7 @@ int main()
     const double heightP = vvod("Enter the  height ");
     std::cout << "Volume=" << getVolume(widthP, lengthP, heightP) << " Area =" << getArea(widthP, lengthP, heightP);
 }
-double vvod(const std::string ss)
+double vvod(const std::string & ss)
 {
     std::cout<<ss;
     double temp;
