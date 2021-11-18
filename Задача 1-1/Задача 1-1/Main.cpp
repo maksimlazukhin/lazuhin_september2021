@@ -1,5 +1,5 @@
 // Task1-1.
-//
+//зАДАНИЕ1-2
 #define _USE_MATH_DEFINES
 #include <cmath>
 #include <iostream>
