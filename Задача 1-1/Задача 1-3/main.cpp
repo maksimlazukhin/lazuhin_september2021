@@ -4,9 +4,9 @@
 #include <cmath>
 #include <iostream>
 /**
-* \ breaf serial connection of 3 resistors
-* \ param r1,r2,r3 - resistors
-* \return equivalent resistor
+* \ breaf последовательное сопротивление 3-х резисторов
+* \ param r1,r2,r3 - сопротивления
+* \return эквивалентное сопротивление
 */
 double sop(const double r1,const double r2,const double r3);
 /**
