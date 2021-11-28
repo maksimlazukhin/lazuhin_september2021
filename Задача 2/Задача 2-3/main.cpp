@@ -2,15 +2,15 @@
 #include <iostream>
 #include <string> 
 /**
-*\ brief приветствие в зависимости от часа
-*\ param час
-*\ return приветствие
+*\ brief РїСЂРёРІРµС‚СЃС‚РІРёРµ РІ Р·Р°РІРёСЃРёРјРѕСЃС‚Рё РѕС‚ С‡Р°СЃР°
+*\ param С‡Р°СЃ
+*\ return РїСЂРёРІРµС‚СЃС‚РІРёРµ
 */
 std::string vremy(int a);
 /**
-*\ brief ввод часа
-*\ param строка запроса ввода
-*\ return час
+*\ brief РІРІРѕРґ С‡Р°СЃР°
+*\ param СЃС‚СЂРѕРєР° Р·Р°РїСЂРѕСЃР° РІРІРѕРґР°
+*\ return С‡Р°СЃ
 * */
 int input_int(std::string& ss);
 int main()
