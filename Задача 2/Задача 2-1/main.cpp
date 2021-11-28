@@ -1,21 +1,21 @@
 // Task2-1.
 #include <iostream>
 /**
-*\ brief  Объем паралепипеда
-*\ param ширина, длина, высота
-*\ return объем
+*\ brief  РћР±СЉРµРј РїР°СЂР°Р»РµРїРёРїРµРґР°
+*\ param С€РёСЂРёРЅР°, РґР»РёРЅР°, РІС‹СЃРѕС‚Р°
+*\ return РѕР±СЉРµРј
 */
 double getVolume(double widthP, double lengthP, double heightP);
 /**
-*\ brief  Площадь поверхности парралепипеда
-*\ param ширина, длина, высота
-*\ return  площадь
+*\ brief  РџР»РѕС‰Р°РґСЊ РїРѕРІРµСЂС…РЅРѕСЃС‚Рё РїР°СЂСЂР°Р»РµРїРёРїРµРґР°
+*\ param С€РёСЂРёРЅР°, РґР»РёРЅР°, РІС‹СЃРѕС‚Р°
+*\ return  РїР»РѕС‰Р°РґСЊ
 */
 double getArea(double widthP, double lengthP, double heightP);
 /**
-*\ brief  вводит число двойной точности по приглашению
-*\ param строка приглашения
-*\ return введенное число
+*\ brief  РІРІРѕРґРёС‚ С‡РёСЃР»Рѕ РґРІРѕР№РЅРѕР№ С‚РѕС‡РЅРѕСЃС‚Рё РїРѕ РїСЂРёРіР»Р°С€РµРЅРёСЋ
+*\ param СЃС‚СЂРѕРєР° РїСЂРёРіР»Р°С€РµРЅРёСЏ
+*\ return РІРІРµРґРµРЅРЅРѕРµ С‡РёСЃР»Рѕ
 */
 double enter_double(const std::string& message);
 int main()
