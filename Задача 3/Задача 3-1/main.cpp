@@ -2,9 +2,9 @@
 #include <iostream>
 #include <cmath>
 /**
-*\ brief находит 
+*\ brief РЅР°С…РѕРґРёС‚ 
 *\ param x
-*\ return значение функции
+*\ return Р·РЅР°С‡РµРЅРёРµ С„СѓРЅРєС†РёРё
 */
 double funct(double x);
 int main()
@@ -25,6 +25,6 @@ double funct(double x)
     }
     else
     {
-        std::cout << "Неправильный аргумент";
+        std::cout << "РќРµРїСЂР°РІРёР»СЊРЅС‹Р№ Р°СЂРіСѓРјРµРЅС‚";
     }
 }
