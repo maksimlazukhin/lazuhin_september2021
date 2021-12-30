@@ -3,33 +3,40 @@
 #include <iostream>
 #include <cmath>
 /**
-*\ brief  The volume of the Parallelepiped
-*\ param width,length,height
-*\ return volume
+*\ brief  Calculate f(x) = e^2x natively
+*\ param x
+*\ return f(x)
 */
-double funct(double x);
+double funct(const double x);
 /**
-*\ brief  The area of the Parallelepiped
-*\ param width,length,height
-*\ return  area
+*\ brief  Factorial of k: k!
+*\ param k
+*\ return  k!
 */
-int fact(int k);
-double ryd(double x);
+int fact(const int k);
+/**
+*\ brief  Calculate ~f(x) = e^2x using series
+*\ param x
+*\ return ~f(x)
+*/
+double approximate_funct(const double x);
 int main()
 {
     double x=0.1;
     while (x < 1)
     {
-    std::cout << "x="<<x<<" y="<<funct(x)<<" ryd="<<ryd(x)<<"\n";
+    std::cout << "x="<<x<<" y="<<funct(x)<<" ryd="<<approximate_funct(x)<<"\n";
     x += 0.1;
     }
 }
-double funct(double x)
+double funct(const double x)
 {
-    return exp(2*x);
+    return exp(2 * x);
 }
-double ryd(double x)
+double approximate_funct(const double x)
 {
+    // Вообще говоря формула в задании не является рекурентной
+    // https://ru.wikipedia.org/wiki/Рекуррентная_формула
     const double e = 0.002;
     double s = 1;
     double temp = 0;
@@ -43,7 +50,7 @@ double ryd(double x)
     } while (abs(temp) > e);
     return s;
 }
-int fact(int k)
+int fact(const int k)
 {
     int temp = 1;
     for (int i = 1; i <= k; i++)
