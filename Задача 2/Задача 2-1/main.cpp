@@ -18,6 +18,16 @@ double getArea(double widthP, double lengthP, double heightP);
 *\ return введенное число
 */
 double enter_double(const std::string& message);
+
+/// <summary>
+/// Что будем считать
+/// </summary>
+enum kind {
+    VOLUME = 0,
+    AREA = 1
+};
+
+
 int main()
 {
     std::string message= "Enter the width ";
@@ -26,7 +36,11 @@ int main()
     const double lengthP = enter_double(message);
     message = "Enter the  height ";
     const double heightP = enter_double(message);
-    std::cout << "Volume=" << getVolume(widthP, lengthP, heightP) << " Area =" << getArea(widthP, lengthP, heightP);
+    message = "Choose what you want to get (volume: 0, area: 1) ";
+    switch ((int)enter_double(message)) {
+        case VOLUME: std::cout << "Volume=" << getVolume(widthP, lengthP, heightP); break;
+        case AREA: std::cout << " Area =" << getArea(widthP, lengthP, heightP); break;
+    }
 }
 double enter_double(const std::string& message)
 {
