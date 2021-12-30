@@ -3,43 +3,50 @@
 #include <cmath>
 #include <string> 
 #include <random>   
-const int quantity = 81;
+
 using namespace std;
 /**
 *\ brief находит индексы тех элементов,значения которых больше значений последующего элемента
-*\ param  кол-во элементов массива,массив состоящий из целых чисел
+*\ param a массив состоящий из целых чисел
+*\ param quantity кол-во элементов массива
 *\ return индексы тех элементов,значения которых больше значений последующего элемента
 */
-string index(int *a, int quantity);
+string index(const int *a, const int quantity);
 /**
 *\ brief находит сумму элементов,значения которых по модулю меньше 10
-*\ param  кол-во элементов массива,массив состоящий из целых чисел
+*\ param a массив состоящий из целых чисел
+*\ param quantity кол-во элементов массива
 *\ return сумма элементов,значения которых по модулю меньше 10
 */
-int summa(int *a, int quantity);
+int summa(const int *a, const int quantity);
 /**
 *\ brief  Функция ввода элементов многомерного массива,как случайными числами, так и с помощью клавиатуры по желанию пользователя
-*\ param  кол-во элементов массива,массив состоящий из целых чисел
+*\ param a массив состоящий из целых чисел
+*\ param quantity кол-во элементов массива
+*\ return сумма элементов
 */
-void enter1(int * a, int quantity);
+void enter1(int * a, const int quantity);
 /**
 *\ brief Умножает все элементы массива,кратные 3,на третий элемент массива
-*\ param кол-во строк n,массив из n целых чисел
+*\ param a массив из n целых чисел 
+*\ param quantity кол-во строк n
 *\ return все элементы массива, кратные 3,умноженные на 3 элемент  третий элемент массива
 */
-int multipleOfThree(int * a, int quantity);
+int multipleOfThree(const int * a, const int quantity);
 /**
 *\ brief  Функция ввода элементов
-*\ param сообщение о том,что нужно ввести
+*\ param message сообщение о том,что нужно ввести
 */
 int enter(const string & message);
 /**
 *\ brief  Функция вывода элементов
-*\ param  кол-во элементов массива,массив состоящий из целых чисел
+*\ param a массив состоящий из целых чисел
+*\ param quantity кол-во элементов массива
 */
-void conclusion(int* a, int quantity);
+void conclusion(const int* a, const int quantity);
 int main()
 {
+    const int quantity = 81;
     system("chcp 1251");    //вывод в консоль русского шрифта
     int a[quantity];
     enter1(a,quantity);
@@ -55,7 +62,7 @@ int enter(const string & message)
     cin >> temp;
     return temp;
 }
-int summa(int * a, int quantity)
+int summa(const int * a, const int quantity)
 {
     int s = 0;
     for (int i = 0; i < quantity; i++)
@@ -67,7 +74,7 @@ int summa(int * a, int quantity)
     }
     return s;
 }
-string index(int *a, int quantity)
+string index(const int *a, const int quantity)
 {
     string ind;
     for (int i = 0; i < (quantity-1); i++)
@@ -79,7 +86,7 @@ string index(int *a, int quantity)
     }
         return ind;
 }
-int multipleOfThree(int * a, int quantity)
+int multipleOfThree(const int * a, const int quantity)
 {
     int temp = a[2];
     for (int i = 0; i < quantity; i++)
@@ -91,7 +98,7 @@ int multipleOfThree(int * a, int quantity)
     } 
     return temp;
 }
-void enter1(int * a, int quantity)
+void enter1(int * a, const int quantity)
 {
  
  enum input_selection
@@ -123,7 +130,7 @@ void enter1(int * a, int quantity)
         } 
     }
 }
-void conclusion(int* a, int quantity)
+void conclusion(const int* a, int quantity)
 {
     for (int i = 0; i < quantity; i++)
     {
