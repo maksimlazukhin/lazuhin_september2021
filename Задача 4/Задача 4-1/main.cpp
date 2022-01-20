@@ -7,10 +7,10 @@
 
 using namespace std;
 //генератор случайных чисеол с равномерным распределением
-class Rand_int
+class Rand_int      
 {
 public:
-    Rand_int(int low, int high) :dist{ low,high } {}
+    Rand_int(int low, int high) :dist{low,high} {}
     int operator () () { return dist(re); }
     void seed(int s) { re.seed(s); }
 private:
@@ -33,10 +33,9 @@ string index(const int* array, const int quantity);
 */
 int summa(const int* array, const int quantity);
 /**
-*\ brief  Функция ввода элементов массива,как случайными числами, так и с помощью клавиатуры по желанию пользователя
+*\ brief  Функция ввода элементов многомерного массива,как случайными числами, так и с помощью клавиатуры по желанию пользователя
 *\ param array массив состоящий из целых чисел
 *\ param quantity кол-во элементов массива
-*\ return массив
 */
 void enter1(int* array, const int quantity);
 /**
@@ -49,7 +48,6 @@ int multipleOfThree(const int* array, const int quantity);
 /**
 *\ brief  Функция ввода элементов целого типа
 *\ param message сообщение о том,что нужно ввести
-*\ return число введенное с клавиатуры по запросу
 */
 int enter_int(const string& message);
 /**
@@ -68,13 +66,13 @@ int main()
 {
     const int quantity = 81;
     system("chcp 1251");    //вывод в консоль русского шрифта
-    int* array = new int[quantity];
+    int *array = new int[quantity];
     enter1(array, quantity);
     cout << "the sum of elements whose values are modulo less than 10= " << summa(array, quantity) << "\n";
     cout << "indexes of those elements whose values are greater than the value of the subsequent element= " << index(array, quantity) << "\n";
     cout << "elements of array kratnue 3= " << multipleOfThree(array, quantity) << "\n";
     print_array(array, quantity);
-    delete[] array;
+    delete [] array;
 }
 int enter_int(const string& message)
 {
@@ -123,7 +121,7 @@ void enter1(int* array, const int quantity)
 {
     enum input_selection { randomly = 0, ither };
     int temp;
-    cout << "Введите 0 для заполнения массива случайными числами, иначе 1 - "; std::cin >> temp;
+    cout << "Введите randomly для заполнения массива случайными числами, иначе ither - "; std::cin >> temp;
     if (temp == ither)
     {
         input_array(array, quantity);
@@ -132,10 +130,12 @@ void enter1(int* array, const int quantity)
     {
         if (temp == randomly)
         {
-            Rand_int rnd{ -40,40 };
+            const int range_min = -40;
+            const int range_max = 40;
+            Rand_int rnd {range_min,range_max};
             for (int i = 0; i < quantity; i++)
             {
-                array[i] = rnd();
+                array[i] = rnd(); 
             }
         }
     }
@@ -153,6 +153,6 @@ void input_array(int* array, const int quantity)
     {
         stringstream message;
         message << "Enter array [" << i << "] = ";
-        array[i] = enter_int(message.str());
+        array[i] = enter_int(message.str());     
     }
 }
