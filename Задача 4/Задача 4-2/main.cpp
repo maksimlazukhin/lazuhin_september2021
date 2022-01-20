@@ -171,7 +171,7 @@ void enter1(int* array, const int quantity, const int range_min, const int range
 {
     enum input_selection { randomly = 0, ither };
     int temp;
-    cout << "Введите randomly для заполнения массива случайными числами, иначе ither - "; std::cin >> temp;
+    cout << "Введите randomly  для заполнения массива случайными числами, иначе ither - "; std::cin >> temp;
     if (temp == ither)
     {
         input_array(array, quantity);
