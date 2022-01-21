@@ -13,11 +13,7 @@ double funct(const double x);
 *\ return true если корректный аргумент, иначе false
 */
 bool checkValid(const double x);
-/**
-*\ brief табудирует функцию funct() заданную на интерваое LEFT_X  - RIGHT_X с шагом  DELTA
-*\ param x
-*\ return вычислима ли f(x) = 0.1x^2 - xln(x)
-*/
+
 int main()
 {
     const double LEFT_X = 1.0;
