@@ -4,18 +4,8 @@
 #include <cmath>
 #include <string> 
 #include <random>
+#include <tuple>
 using namespace std;
-//генератор случайных чисеол с равномерным распределением
-class Rand_int
-{
-public:
-    Rand_int(int low, int high) :dist{ low,high } {}
-    int operator () () { return dist(re); }
-    void seed(int s) { re.seed(s); }
-private:
-    default_random_engine re;
-    uniform_int_distribution <> dist;
-};
 /**
 *\ brief Из элементов массива array_d формирует массив  той же размерности по правилу: элементы с 3-го по 12-й находятся по формуле A[i] = -D[i]^2, остальные по формуле A[i] = D[i]-1
 *\ param массив array_a,массив array_d
@@ -27,7 +17,7 @@ int* new_array(int* array_d, const int quantity);
 *\ brief Замена минимального по модулю положительного элемента массива array нулем.
 *\ param quantity длина массива
 */
-void replacement(int* array, const int quantity);
+int* replacement(int* array, const int quantity);
 /**
 *\ brief  Функция ввода элементов массива,как случайными числами, так и с помощью клавиатуры по желанию пользователя
 *\ param array массив состоящий из целых чисел
@@ -49,10 +39,11 @@ void random_array(int* array, const int quantity, const int min, const int max);
 */
 void input_array(int* array, const int quantity);
 /**
-*\ brief Удаляет из массива array все элементы, первая и последняя цифра которых четная
+*\ brief строит новый массив на основе array крому всех элементы, первая и последняя цифра которых четная
 *\ param quantity длина массива, которая изменяется при удалении
+*\ return указатель на новый массив
 */
-void multiple_twoo(int* array, int& quantity);
+std::tuple<int*, const int> multiple_twoo(int* array, const int quantity);
 /**
 *\ brief Удаляет из массива array элемент с индексом index
 *\ param quantity длина массива - уменьшается на 1
@@ -86,14 +77,18 @@ int main()
     int range_max;
     cout << "введите минимальное значение элементов массива"; cin >> range_min;
     cout << "введите максимальное значение элементов массива"; cin >> range_max;
-    enter1(array_d, quantity, range_min, range_max);
+    enter1(array_d, quantity, range_min, range_max); // заполняем массив
     array_out(array_d, quantity, "Исходный массив D");
-    replacement(array_d, quantity);
+    array_d = replacement(array_d, quantity);  // строим новый с элементами
     array_out(array_d, quantity, "массив D после замены min по модулю положительного элемента 0");
-    multiple_twoo(array_d, quantity);
+    auto tpl = multiple_twoo(array_d, quantity); // новый с прореженными элементами
+    array_d = std::get<0>(tpl);
+    quantity = std::get<1>(tpl);
     array_out(array_d, quantity, "массив D после удаления элеметов 1 и последняя цифра которого четные");
-    int* array_a = new_array(array_d, quantity);
-    array_out(array_a, quantity, "массив А сформированный по правилу");
+    array_d = new_array(array_d, quantity);
+    array_out(array_d, quantity, "массив А сформированный по правилу");
+    delete [] array_d;
+    return 0;
 }
 int number_max(const int number)
 {
@@ -118,8 +113,9 @@ int enter_int(const string message)
     cin >> temp;
     return temp;
 }
-void replacement(int* array, const int quantity)
+int* replacement(int* array, const int quantity)
 {
+    int* new_array = new int[quantity];
     int min1 = numeric_limits<int>::max();
     for (size_t i = 0; i < quantity; i++)
     {
@@ -132,9 +128,15 @@ void replacement(int* array, const int quantity)
     {
         if (array[i] == min1)
         {
-            array[i] = 0;
+            new_array[i] = 0;
+        }
+        else 
+        {
+            new_array[i] = array[i];
         }
     }
+    delete[] array;
+    return new_array;
 }
 int* new_array(int* array_d, const int quantity)
 {
@@ -150,30 +152,27 @@ int* new_array(int* array_d, const int quantity)
             array_a[i] = array_d[i] - 1;
         }
     }
+    delete[] array_d;
     return array_a;
 }
-void multiple_twoo(int* array, int& quantity)
+std::tuple<int*, const int> multiple_twoo(int* array, const int quantity)
 {
-    int i = 0;
-    while (i < quantity)
+    int j = 0;
+    int* new_array = new int[quantity];
+    for (int i = 0; i < quantity; i++)
     {
         int temp = number_max(array[i]);
         if (temp > 0)
         {
-            if ((temp % 2) == 0 && (abs(array[i]) % 2 == 0))
+            if (!((temp % 2) == 0 && (abs(array[i]) % 2 == 0)))
             {
-                erase_array(array, quantity, i);
+                new_array[j] = array[i];
+                j++;
             }
-            else
-            {
-                i++;
-            }
-        }
-        else
-        {
-            i++;
         }
     }
+    delete[] array;
+    return std::make_tuple(new_array, j);
 }
 void enter1(int* array, const int quantity, const int range_min, const int range_max)
 {
@@ -197,10 +196,11 @@ void array_out(int* array, const int quantity, const string message)
 }
 void random_array(int* array, const int quantity, const int min, const int max)
 {
-    Rand_int rnd{ min, max };
+    default_random_engine re;
+    std::uniform_int_distribution<int> gen{ min, max };
     for (size_t i = 0; i < quantity; i++)
     {
-        array[i] = rnd();
+        array[i] = gen(re);
     }
 }
 void input_array(int* array, const int quantity)
