@@ -35,6 +35,14 @@ void replacement(int* array, const int quantity);
 */
 void enter1(int* array, const int quantity, const int range_min, const int range_max);
 /**
+*\ brief  Функция заполнения array случайными числами
+*\ param array массив состоящий из целых чисел
+*\ param quantity кол-во элементов массива
+*\ param min минимум случайного числа
+*\ param max максиум случайного числа
+*/
+void random_array(int* array, const int quantity, const int min, const int max);
+/**
 *\ brief  Функция ввода с клавиатуры массива целых чисел array
 *\ param array массив состоящий из целых чисел
 *\ param quantity кол-во элементов массива
@@ -44,13 +52,13 @@ void input_array(int* array, const int quantity);
 *\ brief Удаляет из массива array все элементы, первая и последняя цифра которых четная
 *\ param quantity длина массива, которая изменяется при удалении
 */
-void multiple_twoo(int* array, int &quantity);
+void multiple_twoo(int* array, int& quantity);
 /**
 *\ brief Удаляет из массива array элемент с индексом index
 *\ param quantity длина массива - уменьшается на 1
 *\ param index - номер элемента, который надо удалить
 */
-void erase_array(int* array, int &quantity, const int index);
+void erase_array(int* array, int& quantity, const int index);
 /**
 *\ brief  Функция ввода элементов целого типа
 *\ param message сообщение о том,что нужно ввести
@@ -58,7 +66,7 @@ void erase_array(int* array, int &quantity, const int index);
 int enter_int(string message);
 /**
 *\ brief Функция вывода элементов массива array
-*\ param quantity длина массива 
+*\ param quantity длина массива
 *\ param message информационное сообщение
 */
 void array_out(int* array, const int quantity, const string message);
@@ -73,7 +81,7 @@ int main()
 {
     system("chcp 1251"); //вывод в консоль русского  шрифта
     int quantity = enter_int("Введите длину массива = ");
-    int *array_d = new int[quantity];
+    int* array_d = new int[quantity];
     int range_min;
     int range_max;
     cout << "введите минимальное значение элементов массива"; cin >> range_min;
@@ -144,7 +152,7 @@ int* new_array(int* array_d, const int quantity)
     }
     return array_a;
 }
-void multiple_twoo(int* array, int &quantity)
+void multiple_twoo(int* array, int& quantity)
 {
     int i = 0;
     while (i < quantity)
@@ -152,7 +160,7 @@ void multiple_twoo(int* array, int &quantity)
         int temp = number_max(array[i]);
         if (temp > 0)
         {
-            if ((temp  % 2) == 0 && (abs(array[i]) % 2 == 0))
+            if ((temp % 2) == 0 && (abs(array[i]) % 2 == 0))
             {
                 erase_array(array, quantity, i);
             }
@@ -169,31 +177,30 @@ void multiple_twoo(int* array, int &quantity)
 }
 void enter1(int* array, const int quantity, const int range_min, const int range_max)
 {
-    enum input_selection { randomly = 0, ither };
-    int temp;
-    cout << "Введите randomly  для заполнения массива случайными числами, иначе ither - "; std::cin >> temp;
-    if (temp == ither)
-    {
-        input_array(array, quantity);
-    }
-    else
-    {
-        if (temp == randomly)
-        {
-            Rand_int rnd{ range_min,range_max };
-            for (size_t i = 0; i < quantity; i++)
-            {
-                array[i] = rnd();
-            }
-        }
+    enum class input_selection { randomly = 0, ither } selection;
+    int inpt;
+    cout << "Введите " << static_cast<int>(input_selection::randomly) << 
+        " для заполнения массива случайными числами, иначе " << static_cast<int>(input_selection::ither); 
+    std::cin >> inpt;
+    switch (static_cast<input_selection>(inpt)) {
+    case input_selection::ither: input_array(array, quantity); break;
+    case input_selection::randomly: random_array(array, quantity, range_min, range_max); break;
     }
 }
-void array_out(int* array, const int quantity,const string message)
+void array_out(int* array, const int quantity, const string message)
 {
-    cout << message <<  "\n";
+    cout << message << "\n";
     for (size_t i = 0; i < quantity; i++)
     {
         cout << "[" << i << "]" << array[i] << "\n";
+    }
+}
+void random_array(int* array, const int quantity, const int min, const int max)
+{
+    Rand_int rnd{ min, max };
+    for (size_t i = 0; i < quantity; i++)
+    {
+        array[i] = rnd();
     }
 }
 void input_array(int* array, const int quantity)
@@ -205,7 +212,7 @@ void input_array(int* array, const int quantity)
         array[i] = enter_int(message.str());
     }
 }
-void erase_array(int* array, int &quantity, const int index)
+void erase_array(int* array, int& quantity, const int index)
 {
     for (size_t i = index; i < (quantity - 1); i++)
         array[i] = array[i + 1];
