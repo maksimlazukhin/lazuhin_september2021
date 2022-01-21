@@ -39,17 +39,18 @@ void random_array(int* array, const int quantity, const int min, const int max);
 */
 void input_array(int* array, const int quantity);
 /**
+*\ brief ищет длину массива для count_multiple_twoo
+*\ param array массив состоящий из целых чисел
+*\ param quantity кол-во элементов массива
+*\ return длина
+*/
+int count_multiple_twoo(const int* array, const int quantity);
+/**
 *\ brief строит новый массив на основе array крому всех элементы, первая и последняя цифра которых четная
 *\ param quantity длина массива, которая изменяется при удалении
 *\ return указатель на новый массив
 */
-std::tuple<int*, const int> multiple_twoo(int* array, const int quantity);
-/**
-*\ brief Удаляет из массива array элемент с индексом index
-*\ param quantity длина массива - уменьшается на 1
-*\ param index - номер элемента, который надо удалить
-*/
-void erase_array(int* array, int& quantity, const int index);
+int* multiple_twoo(int* array, const int quantity, const int target_quantity);
 /**
 *\ brief  Функция ввода элементов целого типа
 *\ param message сообщение о том,что нужно ввести
@@ -81,13 +82,16 @@ int main()
     array_out(array_d, quantity, "Исходный массив D");
     array_d = replacement(array_d, quantity);  // строим новый с элементами
     array_out(array_d, quantity, "массив D после замены min по модулю положительного элемента 0");
-    auto tpl = multiple_twoo(array_d, quantity); // новый с прореженными элементами
-    array_d = std::get<0>(tpl);
-    quantity = std::get<1>(tpl);
+    int target_q = count_multiple_twoo(array_d, quantity);
+    array_d = multiple_twoo(array_d, quantity, target_q); // новый с прореженными элементами
     array_out(array_d, quantity, "массив D после удаления элеметов 1 и последняя цифра которого четные");
     array_d = new_array(array_d, quantity);
     array_out(array_d, quantity, "массив А сформированный по правилу");
-    delete [] array_d;
+    if (array_d != nullptr)
+    {
+        delete[] array_d;
+        array_d = nullptr;
+    }
     return 0;
 }
 int number_max(const int number)
@@ -135,7 +139,11 @@ int* replacement(int* array, const int quantity)
             new_array[i] = array[i];
         }
     }
-    delete[] array;
+    if (array != nullptr)
+    {
+        delete[] array;
+        array = nullptr;
+    }
     return new_array;
 }
 int* new_array(int* array_d, const int quantity)
@@ -152,13 +160,33 @@ int* new_array(int* array_d, const int quantity)
             array_a[i] = array_d[i] - 1;
         }
     }
-    delete[] array_d;
+    if (array_d != nullptr)
+    {
+        delete[] array_d;
+        array_d = nullptr;
+    }
     return array_a;
 }
-std::tuple<int*, const int> multiple_twoo(int* array, const int quantity)
+int count_multiple_twoo(const int* array, const int quantity) 
 {
     int j = 0;
-    int* new_array = new int[quantity];
+    for (int i = 0; i < quantity; i++)
+    {
+        int temp = number_max(array[i]);
+        if (temp > 0)
+        {
+            if (!((temp % 2) == 0 && (abs(array[i]) % 2 == 0)))
+            {
+                j++;
+            }
+        }
+    }
+    return j;
+}
+int* multiple_twoo(int* array, const int quantity, const int target_quantity)
+{
+    int j = 0;
+    int* new_array = new int[target_quantity];
     for (int i = 0; i < quantity; i++)
     {
         int temp = number_max(array[i]);
@@ -171,8 +199,12 @@ std::tuple<int*, const int> multiple_twoo(int* array, const int quantity)
             }
         }
     }
-    delete[] array;
-    return std::make_tuple(new_array, j);
+    if (array != nullptr)
+    {
+        delete[] array;
+        array = nullptr;
+    }
+    return new_array;
 }
 void enter1(int* array, const int quantity, const int range_min, const int range_max)
 {
@@ -211,10 +243,4 @@ void input_array(int* array, const int quantity)
         message << "Enter array [" << i << "] = ";
         array[i] = enter_int(message.str());
     }
-}
-void erase_array(int* array, int& quantity, const int index)
-{
-    for (size_t i = index; i < (quantity - 1); i++)
-        array[i] = array[i + 1];
-    quantity--;
 }
